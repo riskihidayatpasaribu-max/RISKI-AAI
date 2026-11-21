@@ -1,0 +1,40 @@
+/* Kolom input, chip model, dan panel suara dua arah */
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+.chip { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; padding: 5px 6px 5px 10px; border-radius: var(--r-sm); border: 1px solid var(--line-2); color: var(--mu); background: var(--surface); }
+.chip img { width: 20px; height: 20px; border-radius: 4px; object-fit: cover; }
+.chip.is-bad { border-color: rgba(233, 180, 76, 0.4); color: var(--warn); }
+.chip__name { max-width: 10rem; }
+.chip button { padding: 2px; color: inherit; }
+.chip button:hover { color: #fff; }
+
+.composer { background: rgba(18, 21, 30, 0.74); backdrop-filter: blur(18px); border: 1px solid var(--line-2); border-radius: 26px; box-shadow: 0 12px 44px rgba(0, 0, 0, 0.4); transition: border-color 0.2s, box-shadow 0.3s; }
+.composer:focus-within { border-color: color-mix(in srgb, var(--accent) 65%, transparent); box-shadow: 0 12px 44px rgba(0, 0, 0, 0.4), 0 0 0 4px color-mix(in srgb, var(--accent) 12%, transparent); }
+.composer textarea { display: block; width: 100%; background: transparent; border: 0; outline: none; resize: none; min-height: 56px; max-height: 176px; padding: 18px 22px 4px; font-size: 16px; line-height: 1.55; overflow-y: auto; }
+.composer textarea::placeholder { color: var(--dim); }
+.composer__bar { display: flex; align-items: center; gap: 4px; padding: 4px 10px 10px 10px; }
+.composer__spacer { flex: 1; }
+
+.model-chip { display: inline-flex; align-items: center; gap: 9px; min-width: 0; max-width: 62%; padding: 5px 12px 5px 7px; margin-right: 4px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); font-size: 13px; font-weight: 500; transition: background 0.15s, border-color 0.15s; }
+.model-chip:hover { background: var(--surface-2); border-color: var(--line-2); }
+.model-chip i { font-size: 11px; color: var(--dim); flex: none; }
+
+.icon-btn { padding: 9px; border-radius: 12px; color: var(--mu); transition: background 0.15s, color 0.15s; }
+.icon-btn i { font-size: 20px; display: block; }
+.icon-btn:hover { background: var(--surface-2); color: #fff; }
+.icon-btn.is-rec { color: var(--bad); background: rgba(240, 112, 122, 0.14); animation: pulse 1.2s infinite; }
+@keyframes pulse { 50% { opacity: 0.55; } }
+
+.send-btn { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%; background: var(--accent); color: #07080c; transition: transform 0.15s, background 0.4s, opacity 0.2s; }
+.send-btn i { font-size: 19px; }
+.send-btn:hover:not(:disabled) { transform: translateY(-1px) scale(1.04); }
+.send-btn:disabled { background: var(--surface-2); color: var(--dim); }
+
+/* ---------- Suara dua arah ---------- */
+.livepanel { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6px; padding: 22px 20px 22px; border: 1px solid var(--line-2); border-radius: 28px; background: rgba(18, 21, 30, 0.74); backdrop-filter: blur(18px); box-shadow: 0 12px 44px rgba(0, 0, 0, 0.4); }
+.livepanel .orb { margin: 18px 0 24px; }
+.livepanel__title { font-size: 18px; font-weight: 600; letter-spacing: -0.01em; }
+.livepanel__hint { font-size: 12.5px; color: var(--dim); max-width: 44ch; }
+.livepanel__caption { width: 100%; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); text-align: left; font-size: 14px; line-height: 1.6; }
+.livepanel__caption p { margin: 0 0 6px; }
+.livepanel__caption span { color: var(--dim); }
+.livepanel__err { color: var(--bad); font-size: 13px; margin-top: 12px; }

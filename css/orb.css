@@ -1,0 +1,126 @@
+/* ORB
+   Variabel yang dipakai (di-set oleh komponen Orb):
+   --size  diameter
+   --spd   pengali durasi animasi (lebih kecil = lebih cepat)
+   --lvl   0..1, level suara untuk denyut
+   --o1..3 warna provider */
+.orb {
+  --size: 160px;
+  --spd: 1;
+  --lvl: 0;
+  display: block;
+  position: relative;
+  width: var(--size);
+  height: var(--size);
+  flex: none;
+  isolation: isolate;
+}
+
+.orb__glow {
+  position: absolute;
+  inset: -30%;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--o1) 60%, transparent), transparent 66%);
+  filter: blur(calc(var(--size) * 0.1));
+  opacity: 0.5;
+  transform: scale(calc(1 + var(--lvl) * 0.3));
+  transition: transform 0.14s linear, opacity 0.5s;
+  animation: orb-breathe calc(6s * var(--spd)) ease-in-out infinite;
+  z-index: -1;
+}
+
+.orb__body {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 65%, color-mix(in srgb, var(--o2) 70%, #05060a), #07080d 78%);
+  box-shadow:
+    inset 0 0 calc(var(--size) * 0.16) rgba(255, 255, 255, 0.14),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+  transform: scale(calc(1 + var(--lvl) * 0.09));
+  transition: transform 0.12s linear;
+}
+
+.orb__blob {
+  position: absolute;
+  width: 72%;
+  height: 72%;
+  border-radius: 50%;
+  filter: blur(calc(var(--size) * 0.1));
+  mix-blend-mode: screen;
+  opacity: 0.85;
+}
+.orb__blob--a { background: var(--o1); top: -12%; left: -8%; animation: orb-a calc(9s * var(--spd)) ease-in-out infinite; }
+.orb__blob--b { background: var(--o3); width: 52%; height: 52%; opacity: 0.5; right: -6%; bottom: -4%; animation: orb-b calc(11s * var(--spd)) ease-in-out infinite; }
+.orb__blob--c { background: var(--o2); top: 22%; left: 20%; animation: orb-c calc(7s * var(--spd)) ease-in-out infinite; }
+
+.orb__body::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 38%, transparent 40%, rgba(2, 3, 6, 0.55) 100%);
+  pointer-events: none;
+}
+
+.orb__shine {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.6), transparent 36%),
+    radial-gradient(circle at 70% 90%, rgba(255, 255, 255, 0.14), transparent 40%);
+  mix-blend-mode: soft-light;
+}
+
+.orb__ring {
+  position: absolute;
+  inset: -5%;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, transparent 0 55%, var(--o3) 85%, transparent 100%);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 1px));
+          mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 1px));
+  opacity: 0;
+  transition: opacity 0.5s;
+  animation: orb-spin calc(3.5s * var(--spd)) linear infinite;
+}
+.orb.is-thinking .orb__ring,
+.orb.is-live .orb__ring,
+.orb.is-speaking .orb__ring { opacity: 0.95; }
+.orb.is-thinking .orb__glow,
+.orb.is-live .orb__glow,
+.orb.is-speaking .orb__glow { opacity: 0.85; }
+
+.orb--sm .orb__ring { inset: -12%; }
+
+@keyframes orb-breathe { 0%, 100% { scale: 1; } 50% { scale: 1.06; } }
+@keyframes orb-spin { to { transform: rotate(360deg); } }
+@keyframes orb-a {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(45%, 28%) scale(1.18); }
+  66% { transform: translate(14%, 55%) scale(0.88); }
+}
+@keyframes orb-b {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  40% { transform: translate(-50%, -26%) scale(1.12); }
+  75% { transform: translate(-18%, -52%) scale(0.9); }
+}
+@keyframes orb-c {
+  0%, 100% { transform: translate(0, 0) scale(0.9); }
+  50% { transform: translate(-22%, 24%) scale(1.2); }
+}
+
+/* varian latar: cahaya besar yang diburamkan, tanpa tepi, cincin, atau kilap */
+.orb--ambient { filter: blur(70px); }
+.orb--ambient .orb__ring, .orb--ambient .orb__shine, .orb--ambient .orb__glow, .orb--ambient .orb__body::after { display: none; }
+.orb--ambient .orb__body { box-shadow: none; }
+
+/* bola kecil statis untuk merek dan avatar jawaban */
+.mini-orb {
+  display: inline-block; flex: none; border-radius: 50%;
+  background:
+    radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.7), transparent 42%),
+    linear-gradient(140deg, var(--o1), var(--o2));
+  box-shadow: 0 0 12px color-mix(in srgb, var(--o1) 55%, transparent), inset 0 0 6px rgba(255, 255, 255, 0.25);
+}
